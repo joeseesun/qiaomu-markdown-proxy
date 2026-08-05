@@ -1,0 +1,218 @@
+{
+  "ok": true,
+  "threshold": 0.34,
+  "description_concepts": [
+    "document_types",
+    "downstream",
+    "feishu",
+    "markdown",
+    "read_action",
+    "url_intent",
+    "wechat"
+  ],
+  "missing_description_concepts": [],
+  "summary": {
+    "total": 15,
+    "passed": 15,
+    "false_positive": 0,
+    "false_negative": 0,
+    "pass_rate": 1.0
+  },
+  "failures": [],
+  "results": {
+    "should_trigger": [
+      {
+        "prompt": "读取这篇公众号文章，然后以第一人称写稿：https://mp.weixin.qq.com/s/abc123",
+        "family": "wechat_composite_write",
+        "expected_trigger": true,
+        "predicted_trigger": true,
+        "passed": true,
+        "score": 0.6,
+        "matched_concepts": [
+          "downstream",
+          "read_action",
+          "wechat"
+        ],
+        "negative_pattern": null
+      },
+      {
+        "prompt": "帮我抓取这个微信公众号链接：https://mp.weixin.qq.com/s/abc123",
+        "family": "wechat_extract_only",
+        "expected_trigger": true,
+        "predicted_trigger": true,
+        "passed": true,
+        "score": 0.6,
+        "matched_concepts": [
+          "read_action",
+          "url_intent",
+          "wechat"
+        ],
+        "negative_pattern": null
+      },
+      {
+        "prompt": "把这个飞书文档转成 Markdown：https://example.feishu.cn/docx/abc123",
+        "family": "feishu_to_markdown",
+        "expected_trigger": true,
+        "predicted_trigger": true,
+        "passed": true,
+        "score": 0.6,
+        "matched_concepts": [
+          "feishu",
+          "markdown",
+          "read_action"
+        ],
+        "negative_pattern": null
+      },
+      {
+        "prompt": "Read this article and summarize it: https://example.com/post",
+        "family": "general_composite_summary",
+        "expected_trigger": true,
+        "predicted_trigger": true,
+        "passed": true,
+        "score": 0.6,
+        "matched_concepts": [
+          "downstream",
+          "read_action",
+          "url_intent"
+        ],
+        "negative_pattern": null
+      },
+      {
+        "prompt": "Extract this PDF into Markdown: https://example.com/paper.pdf",
+        "family": "remote_pdf",
+        "expected_trigger": true,
+        "predicted_trigger": true,
+        "passed": true,
+        "score": 0.6,
+        "matched_concepts": [
+          "document_types",
+          "markdown",
+          "read_action"
+        ],
+        "negative_pattern": null
+      },
+      {
+        "prompt": "解析这篇 arXiv 论文：https://arxiv.org/abs/1706.03762",
+        "family": "arxiv_source",
+        "expected_trigger": true,
+        "predicted_trigger": true,
+        "passed": true,
+        "score": 0.4,
+        "matched_concepts": [
+          "document_types",
+          "read_action"
+        ],
+        "negative_pattern": null
+      },
+      {
+        "prompt": "读取这条 X 帖子并分析：https://x.com/user/status/123",
+        "family": "x_composite_analysis",
+        "expected_trigger": true,
+        "predicted_trigger": true,
+        "passed": true,
+        "score": 0.6,
+        "matched_concepts": [
+          "document_types",
+          "downstream",
+          "read_action"
+        ],
+        "negative_pattern": null
+      }
+    ],
+    "should_not_trigger": [
+      {
+        "prompt": "我已经贴出全文，直接改写这段文字",
+        "family": "pasted_text",
+        "expected_trigger": false,
+        "predicted_trigger": false,
+        "passed": true,
+        "score": 0.2,
+        "matched_concepts": [
+          "downstream"
+        ],
+        "negative_pattern": "已经贴出全文"
+      },
+      {
+        "prompt": "写一篇关于网站设计的文章",
+        "family": "writing_without_url",
+        "expected_trigger": false,
+        "predicted_trigger": false,
+        "passed": true,
+        "score": 0.0,
+        "matched_concepts": [],
+        "negative_pattern": null
+      },
+      {
+        "prompt": "润色这个本地 Markdown 文件",
+        "family": "local_markdown",
+        "expected_trigger": false,
+        "predicted_trigger": false,
+        "passed": true,
+        "score": 0.2,
+        "matched_concepts": [
+          "markdown"
+        ],
+        "negative_pattern": "本地 markdown"
+      },
+      {
+        "prompt": "只搜索网页，找三篇关于 AI 的新闻",
+        "family": "web_search",
+        "expected_trigger": false,
+        "predicted_trigger": false,
+        "passed": true,
+        "score": 0.0,
+        "matched_concepts": [],
+        "negative_pattern": "只搜索网页"
+      },
+      {
+        "prompt": "Create a URL shortener in Python",
+        "family": "url_software",
+        "expected_trigger": false,
+        "predicted_trigger": false,
+        "passed": true,
+        "score": 0.2,
+        "matched_concepts": [
+          "url_intent"
+        ],
+        "negative_pattern": "create a url shortener"
+      }
+    ],
+    "near_neighbor": [
+      {
+        "prompt": "下载这个 YouTube 视频：https://youtube.com/watch?v=abc",
+        "family": "youtube_specialist",
+        "expected_trigger": false,
+        "predicted_trigger": false,
+        "passed": true,
+        "score": 0.0,
+        "matched_concepts": [],
+        "negative_pattern": "youtube.com"
+      },
+      {
+        "prompt": "把这段已经复制出来的公众号文字做成播客",
+        "family": "content_already_available",
+        "expected_trigger": false,
+        "predicted_trigger": false,
+        "passed": true,
+        "score": 0.4,
+        "matched_concepts": [
+          "downstream",
+          "wechat"
+        ],
+        "negative_pattern": "已经复制出来"
+      },
+      {
+        "prompt": "读取本地 notes.txt 文件",
+        "family": "local_non_pdf",
+        "expected_trigger": false,
+        "predicted_trigger": false,
+        "passed": true,
+        "score": 0.2,
+        "matched_concepts": [
+          "read_action"
+        ],
+        "negative_pattern": null
+      }
+    ]
+  }
+}

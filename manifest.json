@@ -1,0 +1,40 @@
+{
+  "name": "qiaomu-markdown-proxy",
+  "version": "2.1.0",
+  "owner": "Qiaomu",
+  "updated_at": "2026-08-05",
+  "status": "active",
+  "maturity_tier": "governed",
+  "lifecycle_stage": "library",
+  "context_budget_tier": "production",
+  "review_cadence": "quarterly",
+  "target_platforms": [
+    "openai",
+    "claude",
+    "generic",
+    "agent-skills-compatible"
+  ],
+  "capabilities": [
+    "url_to_markdown",
+    "wechat_article_extraction",
+    "feishu_document_extraction",
+    "pdf_extraction",
+    "arxiv_source_extraction",
+    "composite_source_pipeline"
+  ],
+  "release_gates": [
+    "root_entrypoint_isolation",
+    "trigger_eval",
+    "unit_tests",
+    "skill_ir",
+    "secret_scan",
+    "feature_branch_only_publication",
+    "github_release",
+    "clean_install"
+  ],
+  "qiaomu_defaults": {
+    "copyright": "Copyright (c) 向阳乔木",
+    "x": "https://x.com/vista8",
+    "github": "https://github.com/joeseesun/"
+  }
+}

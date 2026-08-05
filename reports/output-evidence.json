@@ -1,0 +1,19 @@
+{
+  "evidence_kind": "provider_backed",
+  "ok": true,
+  "observed_at": "2026-08-05",
+  "provider": "live WeChat article through qiaomu-markdown-proxy routing",
+  "input_class": "mp.weixin.qq.com public article",
+  "checks": {
+    "command_exit_code": 0,
+    "expected_title_present": true,
+    "markdown_frontmatter_present": true,
+    "content_characters": 5241,
+    "verification_wall_rejected": true,
+    "forbidden_signatures_absent": [
+      "环境异常",
+      "完成验证后即可继续访问"
+    ]
+  },
+  "evidence_boundary": "This proves the live extraction route for one public WeChat article on the observed date. It does not prove universal WeChat coverage or bypass private/login-only content."
+}

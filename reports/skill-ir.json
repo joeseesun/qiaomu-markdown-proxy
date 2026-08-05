@@ -1,0 +1,116 @@
+{
+  "schema_version": "2.0.0-qiaomu-lite",
+  "generated_at": "2026-08-05",
+  "package": {
+    "name": "qiaomu-markdown-proxy",
+    "version": "2.1.0",
+    "owner": "Qiaomu",
+    "maturity_tier": "governed",
+    "lifecycle_stage": "library",
+    "upstream_inspiration": null,
+    "upstream_sync": {}
+  },
+  "intent": {
+    "description": "Read, fetch, extract, parse, or convert a URL or link into clean Markdown. Use FIRST whenever a user asks to read source content from a webpage, especially WeChat/微信公众号 mp.weixin.qq.com, Feishu/Lark docs, X/Twitter, PDFs, arXiv papers, or a URL that will feed a later summary, rewrite, article, podcast, or analysis. For WeChat and Feishu, prefer this specialist extractor over generic web open or generic content parsers. Exclude YouTube, pure web search, already-pasted text, and local non-PDF files.",
+    "job_to_be_done": "Read, fetch, extract, parse, or convert a URL or link into clean Markdown. Use FIRST whenever a user asks to read source content from a webpage, especially WeChat/微信公众号 mp.weixin.qq.com, Feishu/Lark docs, X/Twitter, PDFs, arXiv papers, or a URL that will feed a later summary, rewrite, article, podcast, or analysis. For WeChat and Feishu, prefer this specialist extractor over generic web open or generic content parsers. Exclude YouTube, pure web search, already-pasted text, and local non-PDF files.",
+    "target_users": [
+      "Qiaomu operator"
+    ],
+    "inputs": [],
+    "outputs": [],
+    "exclusions": [],
+    "qiaomu_defaults": {
+      "copyright": "Copyright (c) 向阳乔木",
+      "x": "https://x.com/vista8",
+      "github": "https://github.com/joeseesun/"
+    }
+  },
+  "triggers": {
+    "should_trigger": [
+      "读取这篇公众号文章，然后以第一人称写稿：https://mp.weixin.qq.com/s/abc123",
+      "帮我抓取这个微信公众号链接：https://mp.weixin.qq.com/s/abc123",
+      "把这个飞书文档转成 Markdown：https://example.feishu.cn/docx/abc123",
+      "Read this article and summarize it: https://example.com/post",
+      "Extract this PDF into Markdown: https://example.com/paper.pdf",
+      "解析这篇 arXiv 论文：https://arxiv.org/abs/1706.03762",
+      "读取这条 X 帖子并分析：https://x.com/user/status/123"
+    ],
+    "should_not_trigger": [
+      "我已经贴出全文，直接改写这段文字",
+      "写一篇关于网站设计的文章",
+      "润色这个本地 Markdown 文件",
+      "只搜索网页，找三篇关于 AI 的新闻",
+      "Create a URL shortener in Python"
+    ],
+    "near_neighbor": [
+      "下载这个 YouTube 视频：https://youtube.com/watch?v=abc",
+      "把这段已经复制出来的公众号文字做成播客",
+      "读取本地 notes.txt 文件"
+    ]
+  },
+  "workflow": {
+    "router_rules": [],
+    "compact_workflow": [],
+    "gate_ladder": [],
+    "output_contract": []
+  },
+  "resources": {
+    "references": [
+      "references/methods.md"
+    ],
+    "scripts": [
+      "scripts/extract_tex.py",
+      "scripts/fetch_feishu.py",
+      "scripts/fetch_weixin.py"
+    ],
+    "evals": [
+      "evals/trigger_cases.json"
+    ],
+    "reports": [
+      "reports/creation-handoff.md",
+      "reports/prior-art-research.md",
+      "reports/trigger-eval.json"
+    ]
+  },
+  "portability": {
+    "canonical_format": "agent-skills",
+    "adapter_targets": [
+      "openai",
+      "claude",
+      "generic",
+      "agent-skills-compatible"
+    ],
+    "activation": {
+      "mode": "manual",
+      "paths": []
+    },
+    "execution": {
+      "context": "inline",
+      "shell": "bash"
+    },
+    "trust": {
+      "source_tier": "user-provided-url",
+      "remote_inline_execution": "forbid",
+      "generated_public_claims": "evidence-bound"
+    },
+    "permissions": {
+      "network": "read only from user-provided URLs and documented proxy services",
+      "file_write": "extracted Markdown only when requested or when extraction is the complete task",
+      "subprocess": "bundled Bash/Python extractors, curl, Playwright, uv, and optional npx fallback",
+      "interactive": "only when target authentication or browser verification cannot be completed automatically"
+    },
+    "degradation": {
+      "wechat": "proxy cascade, then Playwright, then actionable dependency error",
+      "feishu": "requires user-owned Feishu application credentials",
+      "general_web": "r.jina.ai, defuddle.md, then agent-fetch",
+      "pdf": "remote proxy, then marker-pdf, pdftotext, or pypdf"
+    }
+  },
+  "gates": {},
+  "evidence_boundary": {
+    "generated_reports_are_evidence": true,
+    "planned_work_is_evidence": false,
+    "missing_external_or_human_evidence_label": "missing evidence",
+    "public_claim_policy": "claim only what local validation, install proof, human review, or provider-backed evidence actually supports"
+  }
+}

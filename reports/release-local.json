@@ -1,0 +1,103 @@
+{
+  "ok": true,
+  "phase": "local",
+  "root": "/Users/joe/.agents/skills/qiaomu-markdown-proxy",
+  "version": "2.1.0",
+  "repository": "joeseesun/qiaomu-markdown-proxy",
+  "summary": {
+    "pass": 7,
+    "warn": 2,
+    "block": 0
+  },
+  "gates": [
+    {
+      "gate": "package_validation",
+      "status": "pass",
+      "evidence": {
+        "ok": true,
+        "root": "/Users/joe/.agents/skills/qiaomu-markdown-proxy",
+        "failures": [],
+        "warnings": []
+      }
+    },
+    {
+      "gate": "version_and_report_consistency",
+      "status": "pass",
+      "evidence": {
+        "ok": true,
+        "failures": [],
+        "evidence": {
+          "manifest_name": "qiaomu-markdown-proxy",
+          "manifest_version": "2.1.0",
+          "skill_ir_name": "qiaomu-markdown-proxy",
+          "skill_ir_version": "2.1.0",
+          "trigger_ok": true,
+          "trigger_summary": {
+            "total": 15,
+            "passed": 15,
+            "false_positive": 0,
+            "false_negative": 0,
+            "pass_rate": 1.0
+          }
+        }
+      }
+    },
+    {
+      "gate": "secret_scan",
+      "status": "pass",
+      "evidence": {
+        "findings": []
+      }
+    },
+    {
+      "gate": "git_diff_check",
+      "status": "pass",
+      "evidence": {
+        "ok": true,
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    },
+    {
+      "gate": "feature_branch",
+      "status": "pass",
+      "evidence": {
+        "branch": "codex/improve-wechat-routing"
+      }
+    },
+    {
+      "gate": "clean_worktree",
+      "status": "warn",
+      "evidence": {
+        "dirty": true
+      }
+    },
+    {
+      "gate": "unit_tests",
+      "status": "pass",
+      "evidence": {
+        "ok": true,
+        "returncode": 0,
+        "stdout": "",
+        "stderr": ".....\n----------------------------------------------------------------------\nRan 5 tests in 2.521s\n\nOK"
+      }
+    },
+    {
+      "gate": "clean_install",
+      "status": "warn",
+      "evidence": {
+        "missing_evidence": "rerun with --install-check after the target revision is remote"
+      }
+    },
+    {
+      "gate": "provider_or_human_output_evidence",
+      "status": "pass",
+      "evidence": {
+        "path": "reports/output-evidence.json",
+        "evidence_kind": "provider_backed",
+        "ok": true
+      }
+    }
+  ]
+}

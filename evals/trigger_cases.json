@@ -1,0 +1,139 @@
+{
+  "recommended_threshold": 0.34,
+  "description_required_concepts": [
+    "url_intent",
+    "read_action",
+    "wechat"
+  ],
+  "positive_concepts": {
+    "url_intent": [
+      "url",
+      "link",
+      "链接",
+      "webpage",
+      "article"
+    ],
+    "read_action": [
+      "read",
+      "fetch",
+      "extract",
+      "parse",
+      "convert",
+      "读取",
+      "抓取",
+      "提取",
+      "解析",
+      "转成"
+    ],
+    "wechat": [
+      "wechat",
+      "微信公众号",
+      "公众号",
+      "mp.weixin.qq.com"
+    ],
+    "feishu": [
+      "feishu",
+      "lark",
+      "飞书"
+    ],
+    "document_types": [
+      "pdf",
+      "arxiv",
+      "twitter",
+      "x.com"
+    ],
+    "markdown": [
+      "markdown"
+    ],
+    "downstream": [
+      "summary",
+      "summarize",
+      "rewrite",
+      "article",
+      "podcast",
+      "analysis",
+      "总结",
+      "写稿",
+      "改写",
+      "翻译",
+      "分析",
+      "播客"
+    ]
+  },
+  "negative_patterns": [
+    "youtube.com",
+    "youtu.be",
+    "已经贴出全文",
+    "已经复制出来",
+    "本地 markdown",
+    "不要读取链接",
+    "只搜索网页",
+    "create a url shortener"
+  ],
+  "should_trigger": [
+    {
+      "text": "读取这篇公众号文章，然后以第一人称写稿：https://mp.weixin.qq.com/s/abc123",
+      "family": "wechat_composite_write"
+    },
+    {
+      "text": "帮我抓取这个微信公众号链接：https://mp.weixin.qq.com/s/abc123",
+      "family": "wechat_extract_only"
+    },
+    {
+      "text": "把这个飞书文档转成 Markdown：https://example.feishu.cn/docx/abc123",
+      "family": "feishu_to_markdown"
+    },
+    {
+      "text": "Read this article and summarize it: https://example.com/post",
+      "family": "general_composite_summary"
+    },
+    {
+      "text": "Extract this PDF into Markdown: https://example.com/paper.pdf",
+      "family": "remote_pdf"
+    },
+    {
+      "text": "解析这篇 arXiv 论文：https://arxiv.org/abs/1706.03762",
+      "family": "arxiv_source"
+    },
+    {
+      "text": "读取这条 X 帖子并分析：https://x.com/user/status/123",
+      "family": "x_composite_analysis"
+    }
+  ],
+  "should_not_trigger": [
+    {
+      "text": "我已经贴出全文，直接改写这段文字",
+      "family": "pasted_text"
+    },
+    {
+      "text": "写一篇关于网站设计的文章",
+      "family": "writing_without_url"
+    },
+    {
+      "text": "润色这个本地 Markdown 文件",
+      "family": "local_markdown"
+    },
+    {
+      "text": "只搜索网页，找三篇关于 AI 的新闻",
+      "family": "web_search"
+    },
+    {
+      "text": "Create a URL shortener in Python",
+      "family": "url_software"
+    }
+  ],
+  "near_neighbor": [
+    {
+      "text": "下载这个 YouTube 视频：https://youtube.com/watch?v=abc",
+      "family": "youtube_specialist"
+    },
+    {
+      "text": "把这段已经复制出来的公众号文字做成播客",
+      "family": "content_already_available"
+    },
+    {
+      "text": "读取本地 notes.txt 文件",
+      "family": "local_non_pdf"
+    }
+  ]
+}

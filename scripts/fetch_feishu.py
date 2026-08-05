@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Fetch Feishu/Lark document as Markdown. Standalone script using Feishu Open API."""
 
-import sys
+import argparse
 import json
 import os
 import re
@@ -304,17 +304,16 @@ def format_as_markdown(result):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: fetch_feishu.py <feishu_url_or_doc_token> [--json]", file=sys.stderr)
-        print("  需要环境变量: FEISHU_APP_ID, FEISHU_APP_SECRET", file=sys.stderr)
-        sys.exit(1)
+    parser = argparse.ArgumentParser(
+        description="Fetch a Feishu/Lark document as Markdown. Requires FEISHU_APP_ID and FEISHU_APP_SECRET."
+    )
+    parser.add_argument("url_or_token", help="Feishu/Lark document URL or document token")
+    parser.add_argument("--json", action="store_true", dest="use_json", help="Return structured JSON")
+    args = parser.parse_args()
 
-    url = sys.argv[1]
-    use_json = "--json" in sys.argv
+    result = fetch_feishu_doc(args.url_or_token)
 
-    result = fetch_feishu_doc(url)
-
-    if use_json:
+    if args.use_json:
         print(json.dumps(result, ensure_ascii=False, indent=2))
     else:
         print(format_as_markdown(result))

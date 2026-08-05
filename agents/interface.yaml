@@ -1,0 +1,36 @@
+interface:
+  display_name: "Qiaomu Markdown Proxy"
+  short_description: "Read WeChat, Feishu, PDFs, arXiv, X, and web URLs as clean Markdown"
+  default_prompt: "Use $qiaomu-markdown-proxy first whenever the user provides a URL and asks to read, fetch, extract, parse, convert, summarize, rewrite, translate, or analyze its source content. Route mp.weixin.qq.com through scripts/fetch_weixin.sh, which rejects verification pages and falls back to Playwright. Route Feishu, PDF, arXiv, YouTube, and general URLs according to SKILL.md. For composite requests, pass the extracted Markdown to the downstream task in the same turn instead of stopping after extraction. Do not trigger for already-pasted text, pure web search, YouTube extraction, or local non-PDF files."
+  examples:
+    - "读取这篇公众号文章，然后用第一人称写一篇推荐稿：https://mp.weixin.qq.com/s/abc123"
+    - "把这个飞书文档转成 Markdown：https://example.feishu.cn/docx/abc123"
+    - "提取这篇 arXiv 论文的正文和图表：https://arxiv.org/abs/1706.03762"
+    - "Read this article and summarize it: https://example.com/post"
+compatibility:
+  canonical_format: "agent-skills"
+  adapter_targets:
+    - "openai"
+    - "claude"
+    - "generic"
+    - "agent-skills-compatible"
+  activation:
+    mode: "manual"
+    paths: []
+  execution:
+    context: "inline"
+    shell: "bash"
+  trust:
+    source_tier: "user-provided-url"
+    remote_inline_execution: "forbid"
+    generated_public_claims: "evidence-bound"
+  permissions:
+    network: "read only from user-provided URLs and documented proxy services"
+    file_write: "extracted Markdown only when requested or when extraction is the complete task"
+    subprocess: "bundled Bash/Python extractors, curl, Playwright, uv, and optional npx fallback"
+    interactive: "only when target authentication or browser verification cannot be completed automatically"
+  degradation:
+    wechat: "proxy cascade, then Playwright, then actionable dependency error"
+    feishu: "requires user-owned Feishu application credentials"
+    general_web: "r.jina.ai, defuddle.md, then agent-fetch"
+    pdf: "remote proxy, then marker-pdf, pdftotext, or pypdf"
