@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Fetch WeChat (公众号) article as Markdown. Standalone script using Playwright + BeautifulSoup."""
 
-import sys
+import argparse
 import json
 import asyncio
 import re
@@ -121,16 +121,14 @@ def format_as_markdown(result: dict) -> str:
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: fetch_weixin.py <weixin_url> [--json]", file=sys.stderr)
-        sys.exit(1)
+    parser = argparse.ArgumentParser(description="Fetch a WeChat public-account article as Markdown.")
+    parser.add_argument("url", help="WeChat article URL under mp.weixin.qq.com")
+    parser.add_argument("--json", action="store_true", dest="use_json", help="Return structured JSON")
+    args = parser.parse_args()
 
-    url = sys.argv[1]
-    use_json = "--json" in sys.argv
+    result = asyncio.run(fetch_weixin_article(args.url))
 
-    result = asyncio.run(fetch_weixin_article(url))
-
-    if use_json:
+    if args.use_json:
         print(json.dumps(result, ensure_ascii=False, indent=2))
     else:
         print(format_as_markdown(result))

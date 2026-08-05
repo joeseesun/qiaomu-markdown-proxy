@@ -7,7 +7,7 @@ Use `scripts/fetch.sh` for automatic proxy cascade with fallback. Try in order u
 ### 1. r.jina.ai
 
 ```bash
-bash ~/.claude/skills/qiaomu-markdown-proxy/scripts/fetch.sh "https://example.com"
+bash ~/.agents/skills/qiaomu-markdown-proxy/scripts/fetch.sh "https://example.com"
 ```
 
 Wide coverage, preserves image links. Try this first.
@@ -23,7 +23,7 @@ Last resort local tool, automatically tried if both proxies fail.
 ### With Custom Proxy
 
 ```bash
-bash ~/.claude/skills/qiaomu-markdown-proxy/scripts/fetch.sh "https://example.com" "http://127.0.0.1:7890"
+bash ~/.agents/skills/qiaomu-markdown-proxy/scripts/fetch.sh "https://example.com" "http://127.0.0.1:7890"
 ```
 
 ## PDF to Markdown
@@ -40,13 +40,13 @@ If that fails, download and extract locally:
 
 ```bash
 curl -sL "https://example.com/paper.pdf" -o /tmp/input.pdf
-bash ~/.claude/skills/qiaomu-markdown-proxy/scripts/extract_pdf.sh /tmp/input.pdf
+bash ~/.agents/skills/qiaomu-markdown-proxy/scripts/extract_pdf.sh /tmp/input.pdf
 ```
 
 ### Local PDF File
 
 ```bash
-bash ~/.claude/skills/qiaomu-markdown-proxy/scripts/extract_pdf.sh /path/to/file.pdf
+bash ~/.agents/skills/qiaomu-markdown-proxy/scripts/extract_pdf.sh /path/to/file.pdf
 ```
 
 The script tries three methods in order:
@@ -65,25 +65,25 @@ The script tries three methods in order:
 
 ## WeChat Public Account (公众号)
 
-Use the proxy cascade first (r.jina.ai / defuddle.md). Works for most articles without extra tools.
-
-If proxies are blocked, use the built-in Playwright script as last resort:
+Use the dedicated wrapper. It first runs the proxy cascade, rejects WeChat verification/login walls, and then falls back to the bundled Playwright extractor:
 
 ```bash
-python3 ~/.claude/skills/qiaomu-markdown-proxy/scripts/fetch_weixin.py "https://mp.weixin.qq.com/s/abc123"
+bash ~/.agents/skills/qiaomu-markdown-proxy/scripts/fetch_weixin.sh "https://mp.weixin.qq.com/s/abc123"
 ```
 
-**Requirements** (one-time setup, ~300 MB):
+If Python packages are missing and `uv` exists, the wrapper runs them in an isolated environment. A Chromium runtime is still required for the browser fallback.
+
+**Manual setup** (only when neither local packages nor `uv` are available):
 ```bash
-pip install playwright beautifulsoup4 lxml
-playwright install chromium
+python3 -m pip install playwright beautifulsoup4 lxml
+python3 -m playwright install chromium
 ```
 
 **Output**: YAML frontmatter (title, author, date, url) + Markdown body
 
 **JSON output**:
 ```bash
-python3 ~/.claude/skills/qiaomu-markdown-proxy/scripts/fetch_weixin.py "URL" --json
+bash ~/.agents/skills/qiaomu-markdown-proxy/scripts/fetch_weixin.sh "URL" --json
 ```
 
 ## Feishu / Lark Document
@@ -93,7 +93,7 @@ Built-in API script for Feishu documents. Requires app credentials:
 ```bash
 export FEISHU_APP_ID=your_app_id
 export FEISHU_APP_SECRET=your_app_secret
-python3 ~/.claude/skills/qiaomu-markdown-proxy/scripts/fetch_feishu.py "https://xxx.feishu.cn/docx/xxxxxxxx"
+python3 ~/.agents/skills/qiaomu-markdown-proxy/scripts/fetch_feishu.py "https://xxx.feishu.cn/docx/xxxxxxxx"
 ```
 
 **Supported types**:
@@ -107,12 +107,12 @@ python3 ~/.claude/skills/qiaomu-markdown-proxy/scripts/fetch_feishu.py "https://
 
 **JSON output**:
 ```bash
-python3 ~/.claude/skills/qiaomu-markdown-proxy/scripts/fetch_feishu.py "URL" --json
+python3 ~/.agents/skills/qiaomu-markdown-proxy/scripts/fetch_feishu.py "URL" --json
 ```
 
 ## YouTube Videos
 
-Use the dedicated `yt-search-download` skill for YouTube content. It handles:
+Use the dedicated `qiaomu-youtube-download` skill for YouTube content. It handles:
 - Video download
 - Subtitle extraction
 - Transcript generation
