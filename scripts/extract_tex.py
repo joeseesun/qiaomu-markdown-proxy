@@ -29,11 +29,15 @@ from html.parser import HTMLParser
 
 def extract_arxiv_id(input_str):
     """Extract arXiv ID from URL or raw ID string."""
-    # arXiv URLs: arxiv.org/abs/2411.12345 or arxiv.org/abs/2411.12345v1
+    # arXiv URLs: arxiv.org/abs/2411.12345 or arxiv.org/abs/2411.12345v1.
+    # Pre-2007 IDs (hep-th/9901001, with optional archive prefix and version)
+    # are still valid arXiv identifiers and must be accepted as well.
     patterns = [
         r'arxiv\.org/abs/([0-9]+\.[0-9]+(?:v[0-9]+)?)',
         r'arxiv\.org/pdf/([0-9]+\.[0-9]+(?:v[0-9]+)?)',
+        r'arxiv\.org/(?:abs|pdf)/([a-z\-]+(?:\.[A-Z]{2})?/[0-9]+(?:v[0-9]+)?)',
         r'^([0-9]+\.[0-9]+(?:v[0-9]+)?)$',
+        r'^([a-z\-]+(?:\.[A-Z]{2})?/[0-9]+(?:v[0-9]+)?)$',
     ]
     for pat in patterns:
         m = re.search(pat, input_str)
